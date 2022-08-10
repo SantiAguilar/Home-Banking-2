@@ -1,11 +1,9 @@
 package com.mindhub.homebanking;
 
-import com.mindhub.homebanking.models.Account;
-import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.models.Transaction;
-import com.mindhub.homebanking.models.TransactionType;
+import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.repositories.LoanRepository;
 import com.mindhub.homebanking.repositories.TransactionRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,6 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 @SpringBootApplication       //Nuestro proyecto es una aplicacionde SpringBoot
 public class HomebankingApplication {
@@ -23,7 +23,7 @@ public class HomebankingApplication {
 
 	}
 	@Bean   //Sin el Bean no se podria ejecutar el programa de manera correcta con todos los datos
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository){
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository){
 		return(args)->   //args es solamente el nombre de una variable
 		{
 			Client client1 = new Client("Santiago", "Aguilar", "seaguilar@mindhub.com");
@@ -64,6 +64,13 @@ public class HomebankingApplication {
 			transactionRepository.save(transaction7);
 			transactionRepository.save(transaction8);
 
+			Loan loan1 =new Loan("Hipotecario", 500000, Arrays.asList(6, 12, 24, 36, 48, 60));
+			Loan loan2 =new Loan("Personal", 100000, Arrays.asList(6, 12, 18));
+			Loan loan3 =new Loan("Automotriz", 300000, Arrays.asList(6, 12, 18, 24));
+
+			loanRepository.save(loan1);
+			loanRepository.save(loan2);
+			loanRepository.save(loan3);
 		};
 	}
 }

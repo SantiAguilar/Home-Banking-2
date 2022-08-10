@@ -12,7 +12,7 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")  // Se asigna el id generado a la variable id  // Genera valor numerico irrepetible de manera ordenada para el id
-    private long Id;
+    private long Id;  //primary key (unico)
     private String firstName, lastName, email;
 
     @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
@@ -33,9 +33,7 @@ public class Client {
     }
 
 
-    public long getId() {
-        return Id;
-    }
+    public long getId() {return Id;}
 
 
     public String getFirstName() {
