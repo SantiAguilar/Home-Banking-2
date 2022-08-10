@@ -1,10 +1,7 @@
 package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.models.*;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
-import com.mindhub.homebanking.repositories.LoanRepository;
-import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.repositories.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,7 +20,7 @@ public class HomebankingApplication {
 
 	}
 	@Bean   //Sin el Bean no se podria ejecutar el programa de manera correcta con todos los datos
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository){
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository){
 		return(args)->   //args es solamente el nombre de una variable
 		{
 			Client client1 = new Client("Santiago", "Aguilar", "seaguilar@mindhub.com");
@@ -71,6 +68,11 @@ public class HomebankingApplication {
 			loanRepository.save(loan1);
 			loanRepository.save(loan2);
 			loanRepository.save(loan3);
+
+			ClientLoan clientLoan1 = new ClientLoan(400000,60,client1,loan1);
+			ClientLoan clientLoan2 = new ClientLoan(50000,12,client1,loan2);
+			clientLoanRepository.save(clientLoan1);
+			clientLoanRepository.save(clientLoan2);
 		};
 	}
 }
