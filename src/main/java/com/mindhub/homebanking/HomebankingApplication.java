@@ -20,7 +20,7 @@ public class HomebankingApplication {
 
 	}
 	@Bean   //Sin el Bean no se podria ejecutar el programa de manera correcta con todos los datos
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository){
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository){
 		return(args)->   //args es solamente el nombre de una variable
 		{
 			Client client1 = new Client("Santiago", "Aguilar", "seaguilar@mindhub.com");
@@ -73,6 +73,13 @@ public class HomebankingApplication {
 			ClientLoan clientLoan2 = new ClientLoan(50000,12,client1,loan2);
 			clientLoanRepository.save(clientLoan1);
 			clientLoanRepository.save(clientLoan2);
+
+			Card card1 = new Card(client1, client1.getFirstName() + " " + client1.getLastName(), CardType.CREDIT, CardColor.silver, "4536-8394-3756-4850", 245, LocalDateTime.now(), LocalDateTime.now().plusYears(5));
+			Card card2 = new Card(client1, client1.getFirstName() + " " + client1.getLastName(), CardType.DEBIT, CardColor.GOLD, "9574-1037-4618-1894", 984, LocalDateTime.now(), LocalDateTime.now().plusYears(5));
+			Card card3 = new Card(client2, client2.getFirstName() + " " + client2.getLastName(), CardType.CREDIT, CardColor.Titanium, "8575-0989-1234-5436", 334, LocalDateTime.now(), LocalDateTime.now().plusYears(5));
+			cardRepository.save(card1);
+			cardRepository.save(card2);
+			cardRepository.save(card3);
 		};
 	}
 }

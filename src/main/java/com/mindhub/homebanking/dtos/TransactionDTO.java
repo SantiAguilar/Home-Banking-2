@@ -27,15 +27,11 @@ public class TransactionDTO
 
     public long getId() {return id;}
 
-
     public double getAmount() {return amount;}
-
 
     public String getDescription() {return description;}
 
-
     public LocalDateTime getDate() {return date;}
-
 
     public TransactionType getType() {return type;}
 
