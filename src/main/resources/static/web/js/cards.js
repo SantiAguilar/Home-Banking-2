@@ -2,7 +2,9 @@ var app = new Vue({
     el:"#app",
     data:{
         clientInfo: {},
-        error: null
+        error: null,
+        creditCards: [],
+        debitCards: []
     },
     methods:{
         getData: function(){
@@ -10,6 +12,8 @@ var app = new Vue({
             .then(function (response) {
                 //get client ifo
                 app.clientInfo = response.data;
+                app.creditCards = app.clientInfo.cards.filter(card => card.type == "CREDIT");
+                app.debitCards = app.clientInfo.cards.filter(card => card.type == "DEBIT");
             })
             .catch(function (error) {
                 // handle error
