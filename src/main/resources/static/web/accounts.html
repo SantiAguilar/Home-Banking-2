@@ -50,7 +50,7 @@
                     <a class="account-link" v-bind:href="'http://localhost:8080/web/account.html?id='+account.id">
                         <div class="card border-0 account">
                             <div class="card-body">
-                                <h5 class="card-title">{{ account.number }}</h5>
+                                <h5 class="card-title account-number">{{ account.number }}</h5>
                                 <p class="card-text"> {{ formatDate(account.creationDate) }}</p>
                                 <p class="text-center lead account-balance"> ${{ account.balance }} </p>
                             </div>
@@ -64,14 +64,14 @@
                 </div>
             </div>
             <div class="row">
-                <div v-for="credit in clientInfo.credits" class="col-12 col-md-3 mt-2">
-                    <div class="card border-0 credit">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ credit.name }}</h5>
-                            <p class="card-text"> payments: {{ credit.payments}}</p>
-                            <p class="text-center lead account-balance"> ${{ credit.amount }} </p>
+                <div v-for="loan in clientInfo.loans" class="col-12 col-md-3 mt-2">
+                        <div class="card border-0 loan">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ loan.name }}</h5>
+                                <p class="card-text"> payments: {{ loan.payments }}</p>
+                                <p class="text-center lead loan-balance"> ${{ loan.amount }} </p>
+                            </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>

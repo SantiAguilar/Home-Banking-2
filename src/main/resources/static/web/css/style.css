@@ -9,7 +9,7 @@
 }
 
 .account{
-    background: linear-gradient(45deg,#ee0979,#ff6a00);
+    background: linear-gradient(45deg, red 0 50%, blue 50% 100%);
     color: white;
     box-shadow: 1px 1px 5px black;
 }
@@ -40,8 +40,8 @@
    color: red;
 }
 
-.credit{
-    background: linear-gradient(45deg,#ee09cf,#0026ff);
+.loan{
+    background: linear-gradient(.25turn, red, 10%, blue);
     color: white;
 }
 
