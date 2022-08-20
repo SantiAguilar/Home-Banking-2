@@ -8,16 +8,6 @@
     box-shadow: 2px 2px 10px black;
 }
 
-.account{
-    background: linear-gradient(45deg, red 0 50%, blue 50% 100%);
-    color: white;
-    box-shadow: 1px 1px 5px black;
-}
-
-.account:hover{
-    box-shadow: 2px 2px 10px black;
-}
-
 .account-details-header{
     background: linear-gradient(45deg,#ee0979,#ff6a00);
     color: white;
@@ -48,4 +38,22 @@
 .menu-logo{
     width: 30px;
     height: 30px;
+}
+
+.welcome{
+    background: linear-gradient(45deg,#ee0979,#ff6a00);
+}
+
+.welcome-logo{
+    width: 60%;
+}
+
+.index-body{
+    background-image: url(../img/avila.jpg);
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.index-container{
+    margin-top: 10%;
 }

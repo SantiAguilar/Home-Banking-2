@@ -9,13 +9,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-public class Client {
-
+public class Client{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")  // Se asigna el id generado a la variable id  // Genera valor numerico irrepetible de manera ordenada para el id
     private long Id;  //primary key (unico)
-    private String firstName, lastName, email;
+    private String firstName, lastName, email, password;
 
     @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
@@ -25,10 +24,11 @@ public class Client {
     private Set<Card> cards = new HashSet<>();
 
     public Client() {}
-    public Client(String firstName, String lastName, String email) {
+    public Client(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.password = password;
     }
 
     public void setCards(Set<Card> cards) {this.cards = cards;}
@@ -75,6 +75,10 @@ public class Client {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
+    public String getPassword() {return password;}
+    public void setPassword(String password) {this.password = password;}
 
     @JsonIgnore
     public Set<Loan> getLoans() {
