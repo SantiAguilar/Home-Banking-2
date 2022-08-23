@@ -2,7 +2,9 @@ package com.mindhub.homebanking.controllers;
 
 
 import com.mindhub.homebanking.dtos.ClientDTO;
+import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,8 @@ public class ClientController {
 
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    private AccountRepository accountRepository;
 
     @RequestMapping("/clients")
     public List<ClientDTO> getClients(){
@@ -45,6 +49,8 @@ public class ClientController {
     public ClientDTO getAuthClient(Authentication authentication){
         Client client = clientRepository.findByEmail(authentication.getName());
         return new ClientDTO(client);
+
+
     }
 
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
@@ -57,16 +63,20 @@ public class ClientController {
 
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {  //pregunta si los parametros estan vacios
 
-            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);               //respuesta 403
 
         }
         if (clientRepository.findByEmail(email) !=  null) {
 
-            return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Name already in use", HttpStatus.FORBIDDEN);        //respuesta 403
 
         }
-
-        clientRepository.save(new Client(firstName, lastName, email, passwordEncoder.encode(password)));
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
+        clientRepository.save(client);
+        accountRepository.save(new Account(client, getRandomCardNumber(), 0));
+        return new ResponseEntity<>(HttpStatus.CREATED);                                          //respuesta 201
+    }
+    public String getRandomCardNumber() {
+        return "VIN"+((int)((Math.random()*(99999999-10000000))+10000000));
     }
 }

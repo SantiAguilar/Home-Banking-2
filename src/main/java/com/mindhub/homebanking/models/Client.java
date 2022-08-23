@@ -40,7 +40,10 @@ public class Client{
         account.setClient(this);
         accounts.add(account);
     }
-
+    public void addCard(Card card){
+        card.setClient(this);
+        cards.add(card);
+    }
 
     public Set<ClientLoan> getClientLoans() {
         return clientLoans;

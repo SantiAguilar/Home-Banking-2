@@ -45,6 +45,23 @@ public class Card {
         this.client = client;
     }
 
+    public Card(CardType type, CardColor color, Client client) {
+        this.number = getFullNumber();
+        this.type = type;
+        this.color = color;
+        this.client = client;
+        this.cvv = ((int)((Math.random()*(999-100))+100));
+        this.fromDate = LocalDateTime.now();
+        this.thruDate = LocalDateTime.now().plusYears(5);
+    }
+
+    public String getFullNumber(){
+        int val1 = (int) ((Math.random() * (9999 - 1000)) + 1000);
+        int val2 = (int) ((Math.random() * (9999 - 1000)) + 1000);
+        int val3 = (int) ((Math.random() * (9999 - 1000)) + 1000);
+        int val4 = (int) ((Math.random() * (9999 - 1000)) + 1000);
+        return val1 + "-" + val2 + "-" + val3 + "-" + val4;
+    }
     public long getId() {return Id;}
 
 

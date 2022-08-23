@@ -27,12 +27,18 @@ public class Account {
     @OneToMany(mappedBy="account", fetch=FetchType.EAGER)
     private Set<Transaction> transactions = new HashSet<>();
 
-    public Account(String number, LocalDateTime creationDate, double balance) {
+    public Account(String number, LocalDateTime creationDate, double balance, Client client) {
         this.number = number;
         this.creationDate = creationDate;
         this.balance = balance;
+        this.client = client;
     }
-
+    public Account(Client client, String number, double balance) {
+        this.number = number;
+        this.creationDate = LocalDateTime.now();
+        this.balance = balance;
+        this.client = client;
+    }
 
     public long getId() {
         return id;
