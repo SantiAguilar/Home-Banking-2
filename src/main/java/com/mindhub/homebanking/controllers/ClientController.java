@@ -49,8 +49,6 @@ public class ClientController {
     public ClientDTO getAuthClient(Authentication authentication){
         Client client = clientRepository.findByEmail(authentication.getName());
         return new ClientDTO(client);
-
-
     }
 
     @RequestMapping(path = "/clients", method = RequestMethod.POST)

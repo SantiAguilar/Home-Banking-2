@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping ("/api")
@@ -27,13 +28,18 @@ public class AccountController {
 
     @RequestMapping("/accounts")
     public List<AccountDTO> getAccounts(){
-        return this.accountRepository.findAll().stream().map(AccountDTO::new).collect(Collectors.toList());
+        return this.accountRepository.findAll().stream().map(AccountDTO::new).collect(toList());
     }
 
     @RequestMapping ("/accounts/{id}")
-    public AccountDTO getAccount(@PathVariable Long id)
-    {
+    public AccountDTO getAccount(@PathVariable Long id) {
         return this.accountRepository.findById(id).map(AccountDTO::new).orElse(null);
+    }
+
+    @RequestMapping(value = "/clients/current/accounts", method = RequestMethod.GET)
+        public List<AccountDTO> getCurrentAccount(Authentication authentication){
+            Client client = clientRepository.findByEmail(authentication.getName());
+            return client.getAccounts().stream().map(AccountDTO::new).collect((toList()));
     }
 
     @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
