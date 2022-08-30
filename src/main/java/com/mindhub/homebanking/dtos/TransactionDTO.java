@@ -12,9 +12,7 @@ public class TransactionDTO
     private TransactionType type;
 
 
-    public TransactionDTO() {
-
-    }
+    public TransactionDTO() {}
     public TransactionDTO(Transaction transaction)
     {
         this.id = transaction.getId();

@@ -25,9 +25,7 @@ public class CardDTO {
     private CardColor color;
 
 
-    public CardDTO() {
-    }
-
+    public CardDTO() {}
     public CardDTO(Card card) {
         Id = card.getId();
         this.cardHolder = card.getCardHolder();
