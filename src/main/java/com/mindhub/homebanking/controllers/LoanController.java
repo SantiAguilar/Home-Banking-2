@@ -1,9 +1,7 @@
 package com.mindhub.homebanking.controllers;
 
-import com.mindhub.homebanking.dtos.AccountDTO;
 import com.mindhub.homebanking.dtos.LoanApplicationDTO;
 import com.mindhub.homebanking.dtos.LoanDTO;
-import com.mindhub.homebanking.dtos.TransactionDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,13 +30,13 @@ public class LoanController {
     @Autowired
     private ClientLoanRepository clientLoanRepository;
 
-    @RequestMapping(path = "/loans", method = RequestMethod.GET)
+    @GetMapping("/loans")
     public List<LoanDTO> getAllLoan(){
         return loanRepository.findAll().stream().map(LoanDTO::new).collect(toList());     //obtiene todos los loans
     }
 
     @Transactional
-    @RequestMapping(path = "/loans", method = RequestMethod.POST)
+    @PostMapping("/loans")
     public ResponseEntity<Object> applyForLoan(Authentication authentication, @RequestBody LoanApplicationDTO loanApplicationDTO) {
 
         double amount = loanApplicationDTO.getAmount();
@@ -74,7 +72,7 @@ public class LoanController {
             return new ResponseEntity<>("La cuenta de destino no pertenece al cliente autenticado", HttpStatus.FORBIDDEN);
         }
 
-        ClientLoan clientloanrequest = new ClientLoan(amount + amount*0.2, payments, client, loan);
+        ClientLoan clientloanrequest = new ClientLoan(amount + amount* loan.getInteres(), payments, client, loan);
         clientLoanRepository.save(clientloanrequest);
 
         Transaction toTransaction = new Transaction(TransactionType.CREDIT, +amount, "prestamo aprobado", toAccount);

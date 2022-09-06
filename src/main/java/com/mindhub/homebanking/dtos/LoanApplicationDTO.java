@@ -22,7 +22,10 @@ public class LoanApplicationDTO {
 
 
     public long getLoanId() {return loanId;}
+
     public double getAmount() {return amount;}
+
     public int getPayments() {return payments;}
+
     public String gettoAccountNumber() {return toAccountNumber;}
 }

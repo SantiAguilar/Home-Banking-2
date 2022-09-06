@@ -31,8 +31,7 @@ public class Card {
     private Client client;
 
 
-    public Card() {
-    }
+    public Card() {}
 
     public Card(Client client, String cardHolder, CardType type, CardColor color, String number, int cvv, LocalDateTime fromDate, LocalDateTime thruDate) {
         this.cardHolder = cardHolder;

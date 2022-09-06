@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,7 +27,7 @@ public class CardController {
         return cardRepository.findAll().stream().map(CardDTO::new).collect(toList());
     }
 
-    @RequestMapping(path = "/clients/current/cards", method = RequestMethod.POST)
+    @PostMapping("/clients/current/cards")
     public ResponseEntity<Object> createCard(Authentication authentication, @RequestParam CardType cardType, @RequestParam CardColor cardColor){
         Client client = this.clientRepository.findByEmail(authentication.getName());
 
@@ -41,7 +38,28 @@ public class CardController {
         Card card = new Card(cardType, cardColor, client);
         client.addCard(card);
         cardRepository.save(card);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>("201 creado", HttpStatus.CREATED);
+
     }
 
+
+    @DeleteMapping("/clients/current/cards")
+    public ResponseEntity<Object> deleteCard(Authentication authentication, @RequestParam String cardNumber){
+        Client client = this.clientRepository.findByEmail(authentication.getName());
+        Card card = cardRepository.findByNumber(cardNumber);
+
+        if(card == null){
+            return new ResponseEntity<>("La tarjeta no existe", HttpStatus.FORBIDDEN);
+        }
+
+        if(!client.getCards().contains(card)){
+            return new ResponseEntity<>("La tarjeta no pertenece a este cliente", HttpStatus.FORBIDDEN);
+        }
+
+        cardRepository.delete(card);
+        return new ResponseEntity<>("Tarjeta borrada", HttpStatus.CREATED);
+
+    }
+
+    //Reto nueve: Un servicio (método dentro de un controlador) TRANSACCIONES EN ESTE CASO
 }

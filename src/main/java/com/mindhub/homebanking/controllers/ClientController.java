@@ -3,6 +3,7 @@ package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.repositories.AccountRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
@@ -51,13 +52,12 @@ public class ClientController {
         return new ClientDTO(client);
     }
 
-    @RequestMapping(path = "/clients", method = RequestMethod.POST)
+    @PostMapping("/clients")
 
     public ResponseEntity<Object> register(                                                         //Registra
+        @RequestParam String firstName, @RequestParam String lastName,
 
-            @RequestParam String firstName, @RequestParam String lastName,
-
-            @RequestParam String email, @RequestParam String password) {
+        @RequestParam String email, @RequestParam String password, @RequestParam AccountType type) {
 
         if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {  //pregunta si los parametros estan vacios
 
@@ -71,7 +71,7 @@ public class ClientController {
         }
         Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
         clientRepository.save(client);
-        accountRepository.save(new Account(client, getRandomCardNumber(), 0));
+        accountRepository.save(new Account(client, getRandomCardNumber(), 0, type));
         return new ResponseEntity<>(HttpStatus.CREATED);                                          //respuesta 201
     }
     public String getRandomCardNumber() {

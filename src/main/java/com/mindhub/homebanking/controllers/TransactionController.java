@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.controllers;
 
+import com.mindhub.homebanking.dtos.TransactionDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
@@ -12,10 +13,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
@@ -28,7 +32,7 @@ public class TransactionController {
     private ClientRepository clientRepository;
 
     @Transactional
-    @RequestMapping(path = "/transactions", method = RequestMethod.POST)
+    @PostMapping("/transactions")
     public ResponseEntity<Object> transactionMake(Authentication authentication,
               @RequestParam String fromAccountNumber, @RequestParam String toAccountNumber,
 
@@ -72,6 +76,23 @@ public class TransactionController {
         accountRepository.save(fromAccount);
         accountRepository.save(toAccount);
 
+
+        return new ResponseEntity<>("201 creado", HttpStatus.CREATED);
+    }
+
+    @GetMapping("/transactions/gets")
+    public ResponseEntity<Object> transactionMake(Authentication authentication, @RequestParam String fromDate, @RequestParam String thruDate, @RequestParam String number){
+
+        Client client = clientRepository.findByEmail(authentication.getName());
+        Account account = accountRepository.findByNumber(number);
+
+        LocalDate from = LocalDate.parse(fromDate);
+        LocalDate thru = LocalDate.parse(thruDate);
+        LocalTime localTime = LocalTime.MIDNIGHT;
+        LocalDateTime fromDate2 = LocalDateTime.of(from, localTime);
+        LocalDateTime thruDate2 = LocalDateTime.of(thru, localTime);
+
+        Set<TransactionDTO> transacciones = transactionRepository.findByDateBetween(fromDate2, thruDate2).stream().filter(transaction -> transaction.getAccount().equals(account)).map(TransactionDTO::new).collect(Collectors.toSet());
 
         return new ResponseEntity<>("201 creado", HttpStatus.CREATED);
     }

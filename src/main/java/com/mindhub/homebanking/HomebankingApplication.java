@@ -31,10 +31,10 @@ public class HomebankingApplication {
 			clientRepository.save(client2);
 
 
-			Account account1 = new Account( "VIN001", LocalDateTime.now(), 5000, client1);   //new llama al constructor
-			Account account2 = new Account( "VIN002", LocalDateTime.now().plusDays(1), 7500, client2);
-			Account account3 = new Account( "VIN003", LocalDateTime.now(), 9000, client1);
-			Account account4 = new Account( "VIN004", LocalDateTime.now().plusDays(1), 4500, client2);
+			Account account1 = new Account( "VIN001", LocalDateTime.now(), 5000, client1, AccountType.CHECKING_ACCOUNT);   //new llama al constructor
+			Account account2 = new Account( "VIN002", LocalDateTime.now().plusDays(1), 7500, client2, AccountType.SAVINGS_ACCOUNT);
+			Account account3 = new Account( "VIN003", LocalDateTime.now(), 9000, client1, AccountType.SALARY_ACCOUNT);
+			Account account4 = new Account( "VIN004", LocalDateTime.now().plusDays(1), 4500, client2, AccountType.SAVINGS_ACCOUNT);
 			accountRepository.save(account1);
 			accountRepository.save(account2);
 			accountRepository.save(account3);

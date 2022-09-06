@@ -20,6 +20,7 @@ public class Loan {
     private String name;
 
     private double maxAmount;
+    private float interes;
 
     @ElementCollection
     @Column(name="payments")
@@ -33,6 +34,12 @@ public class Loan {
         this.name = name;
         this.maxAmount = maxAmount;
         this.payments = payments;
+    }
+    public Loan(String name, double maxAmount, List<Integer> payments, float interes) {
+        this.name = name;
+        this.maxAmount = maxAmount;
+        this.payments = payments;
+        this.interes = interes;
     }
 
     public long getId() {return Id;}
@@ -48,6 +55,11 @@ public class Loan {
 
     public List<Integer> getPayments() {return payments;}
     public void setPayments(List<Integer> payments) {this.payments = payments;}
+
+
+    public float getInteres() {return interes;}
+    public void setInteres(float interes) {this.interes = interes;}
+
 
     @JsonIgnore
     public Set<Client> getClient() {
