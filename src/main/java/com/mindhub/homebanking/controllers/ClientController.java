@@ -71,7 +71,7 @@ public class ClientController {
         }
         Client client = new Client(firstName, lastName, email, passwordEncoder.encode(password));
         clientRepository.save(client);
-        accountRepository.save(new Account(client, getRandomCardNumber(), 0, type));
+        accountRepository.save(new Account(client, type,0, getRandomCardNumber()));
         return new ResponseEntity<>(HttpStatus.CREATED);                                          //respuesta 201
     }
     public String getRandomCardNumber() {

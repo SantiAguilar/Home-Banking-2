@@ -52,7 +52,7 @@ public class AccountController {
             return new ResponseEntity<>("Usted ya tiene 3 cuentas", HttpStatus.FORBIDDEN);
         }
 
-        Account account = new Account(client, getRandomCardNumber(), 0, type);
+        Account account = new Account(client, type,0, getRandomCardNumber());
         accountRepository.save(account);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

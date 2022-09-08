@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.models;
 
+import com.mindhub.homebanking.repositories.AccountRepository;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -36,13 +37,15 @@ public class Account {
         this.balance = balance;
         this.client = client;
         this.type = type;
+        this.activa = true;
     }
-    public Account(Client client, String number, double balance, AccountType type) {
+    public Account(Client client, AccountType type, double balance, String number) {
         this.number = number;
         this.creationDate = LocalDateTime.now();
         this.balance = balance;
         this.client = client;
         this.type = type;
+        this.activa = true;
     }
 
     public long getId() {
